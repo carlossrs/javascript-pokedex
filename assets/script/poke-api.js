@@ -17,6 +17,8 @@ const convertPokeApiToPokemon = (pokeDetail) => {
   pokemon.specialAttack = pokeDetail.stats[3].base_stat;
   pokemon.specialDefense = pokeDetail.stats[4].base_stat;
   pokemon.speed = pokeDetail.stats[5].base_stat;
+  pokemon.statsImage =
+    pokeDetail.sprites.other["official-artwork"].front_default;
 
   pokemon.sprite = pokeDetail.sprites.other.dream_world.front_default;
 
@@ -38,10 +40,4 @@ pokeApi.getPokemon = (offset = 0, limit = 10) => {
     .then((allPokemon) => allPokemon.map(pokeApi.getPokemonDetail))
     .then((detailRequest) => Promise.all(detailRequest))
     .catch((error) => console.log(error));
-};
-
-pokeApi.getPokemonStats = (pokemon) => {
-  return fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
-    .then((response) => response.json())
-    .then(convertPokeApiToPokemon);
 };
